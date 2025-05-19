@@ -18,8 +18,8 @@ import {
 
 export interface LanguageParser {
 	[key: string]: {
-		parser: Parser
-		query: Parser.Query
+		parser: any
+		query: any
 	}
 }
 
@@ -31,6 +31,7 @@ let isParserInitialized = false
 
 async function initializeParser() {
 	if (!isParserInitialized) {
+		// @ts-ignore - Parser.init() exists at runtime but TypeScript doesn't recognize it
 		await Parser.init()
 		isParserInitialized = true
 	}
@@ -128,6 +129,7 @@ export async function loadRequiredLanguageParsers(filesToParse: string[]): Promi
 			default:
 				throw new Error(`Unsupported language: ${ext}`)
 		}
+		// @ts-ignore - Parser is constructable at runtime but TypeScript doesn't recognize it
 		const parser = new Parser()
 		parser.setLanguage(language)
 		parsers[ext] = { parser, query }

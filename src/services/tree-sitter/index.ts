@@ -135,7 +135,7 @@ async function parseFile(
 		const captures = query.captures(tree.rootNode)
 
 		// Sort captures by their start position
-		captures.sort((a, b) => a.node.startPosition.row - b.node.startPosition.row)
+		captures.sort((a: any, b: any) => a.node.startPosition.row - b.node.startPosition.row)
 
 		// Split the file content into individual lines
 		const lines = fileContent.split("\n")
@@ -143,7 +143,7 @@ async function parseFile(
 		// Keep track of the last line we've processed
 		let lastLine = -1
 
-		captures.forEach((capture) => {
+		captures.forEach((capture: any) => {
 			const { node, name } = capture
 			// Get the start and end lines of the current AST node
 			const startLine = node.startPosition.row

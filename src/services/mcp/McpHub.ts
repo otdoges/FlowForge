@@ -778,7 +778,7 @@ export class McpHub {
 			console.error(`Failed to parse timeout configuration for server ${serverName}: ${error}`)
 		}
 
-		return await connection.client.request(
+		const result = await connection.client.request(
 			{
 				method: "tools/call",
 				params: {
@@ -791,6 +791,13 @@ export class McpHub {
 				timeout,
 			},
 		)
+		
+		// Ensure result has the necessary content property structure to match McpToolCallResponse
+		if (!result.content) {
+			result.content = [];
+		}
+		
+		return result as McpToolCallResponse;
 	}
 
 	async toggleToolAutoApprove(serverName: string, toolNames: string[], shouldAllow: boolean): Promise<void> {
